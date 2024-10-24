@@ -14,7 +14,7 @@
         <button id="join-room">Join Room</button>
     </div>
 
-    <div id="board" class="board">
+    <div id="board" class="board" style="display: none;">
         <div class="cell" data-index="0"></div>
         <div class="cell" data-index="1"></div>
         <div class="cell" data-index="2"></div>
@@ -29,11 +29,30 @@
     <button id="reset-button" style="display:none">Reset Game</button>
     <div id="game-status"></div>
 
-    <!-- Include Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <!-- Include Firebase SDKs with the modular approach -->
+    <script type="module">
+      // Import the functions needed from the Firebase SDKs
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+      import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
-    <!-- Your JavaScript file -->
-    <script src="tic-tac-toe-v2.js"></script>
+      // Firebase configuration
+      const firebaseConfig = {
+          apiKey: "AIzaSyC2V2ypChGe0mdJPItig9Cs_yJntXPTPCw",
+          authDomain: "saric-tictactoe.firebaseapp.com",
+          databaseURL: "https://saric-tictactoe-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "saric-tictactoe",
+          storageBucket: "saric-tictactoe.appspot.com",
+          messagingSenderId: "335416732514",
+          appId: "1:335416732514:web:6be26cc91d2cf43ed3da3b",
+          measurementId: "G-23CJXDGKWW"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      // Now you can use `database`, `ref`, `set`, `get`, and `onValue` in your script
+      import './tic-tac-toe-v2.js';
+    </script>
 </body>
 </html>
