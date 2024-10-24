@@ -6,7 +6,8 @@ const firebaseConfig = {
     storageBucket: "saric-tictactoe.appspot.com",
     messagingSenderId: "335416732514",
     appId: "1:335416732514:web:6be26cc91d2cf43ed3da3b",
-    measurementId: "G-23CJXDGKWW"
+    measurementId: "G-23CJXDGKWW",
+    databaseURL: "https://saric-tictactoe-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase
