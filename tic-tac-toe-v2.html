@@ -3,30 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe v2 - Multiplayer</title>
-    <link rel="stylesheet" href="tic-tac-toe-v2.css">
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <title>Tic-Tac-Toe v2</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Tic-Tac-Toe v2 - Multiplayer</h1>
-    </header>
+    <div class="setup">
+        <input type="text" id="player-name" placeholder="Enter your name">
+        <input type="text" id="room-id" placeholder="Enter Room ID (for joining)">
+        <button id="create-room">Create Room</button>
+        <button id="join-room">Join Room</button>
+    </div>
 
-    <section class="setup">
-        <div class="player-info">
-            <input type="text" id="player-name" placeholder="Enter your name" required>
-            <button id="create-room">Create Room</button>
-            <button id="join-room">Join Room</button>
-            <input type="text" id="player-name" placeholder="Enter your name" required>
-            <input type="text" id="room-id" placeholder="Room ID" required>
-        </div>
-        <div class="room-info">
-            <input type="text" id="room-id" placeholder="Room ID" required>
-        </div>
-    </section>
-
-    <div class="board" id="board" style="display: none;">
+    <div id="board" class="board">
         <div class="cell" data-index="0"></div>
         <div class="cell" data-index="1"></div>
         <div class="cell" data-index="2"></div>
@@ -37,10 +25,15 @@
         <div class="cell" data-index="7"></div>
         <div class="cell" data-index="8"></div>
     </div>
+    
+    <button id="reset-button" style="display:none">Reset Game</button>
+    <div id="game-status"></div>
 
-    <div id="game-status" class="game-status"></div>
-    <button id="reset-button" class="reset-button" style="display: none;">Reset Game</button>
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
 
+    <!-- Your JavaScript file -->
     <script src="tic-tac-toe-v2.js"></script>
 </body>
 </html>
