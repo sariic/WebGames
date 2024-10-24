@@ -1,3 +1,7 @@
+// Import Firebase modules (only needed parts)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
 // Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC2V2ypChGe0mdJPItig9Cs_yJntXPTPCw",
@@ -11,12 +15,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-//const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 let playerName = "";
 let roomId = "";
@@ -58,7 +58,8 @@ function joinRoom() {
         alert("Please enter your name and room ID.");
         return;
     }
-    firebase.database().ref(`rooms/${roomId}`).get().then((snapshot) => {
+    const roomRef = ref(database, `rooms/${roomId}`);
+    get(roomRef).then((snapshot) => {
         if (snapshot.exists()) {
             gameActive = true;
             startGame();
@@ -74,8 +75,8 @@ function startGame() {
     board.style.display = 'grid';
     resetButton.style.display = 'block';
 
-    // Listen for changes in the game state
-    firebase.database().ref(`rooms/${roomId}`).on('value', (snapshot) => {
+    const roomRef = ref(database, `rooms/${roomId}`);
+    onValue(roomRef, (snapshot) => {
         const roomData = snapshot.val();
         if (roomData) {
             boardState = roomData.boardState;
@@ -96,7 +97,8 @@ function startGame() {
 
 // Update Firebase Database
 function updateDatabase() {
-    firebase.database().ref(`rooms/${roomId}`).set({
+    const roomRef = ref(database, `rooms/${roomId}`);
+    set(roomRef, {
         boardState: boardState,
         currentPlayer: currentPlayer
     });
