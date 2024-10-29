@@ -19,116 +19,89 @@
         button {
             padding: 10px 15px;
             margin-top: 10px;
+            cursor: pointer;
         }
         .message {
             margin-top: 20px;
             font-weight: bold;
         }
-        #player {
-            position: relative; /* Position relative for overlay */
-            width: 640px; /* Set width of player */
-            height: 360px; /* Set height of player */
-            margin: 0 auto; /* Center the player */
-            overflow: hidden; /* Hide overflow */
-        }
-        #blackTile {
-            position: absolute; /* Position absolute to overlay */
-            top: 0; /* Align to top */
-            left: 0; /* Align to left */
-            width: 100%; /* Full width */
-            height: 320px; /* Height of black tile */
-            background-color: black; /* Black color */
-            z-index: 1; /* On top of iframe */
-        }
-        #youtubePlayer {
-            position: relative; /* Position relative for z-index */
-            z-index: 0; /* Below the black tile */
+        .audio-button {
+            background-color: #4CAF50; /* Green background */
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
     <h1>Guess the Song!</h1>
-    <div id="player">
-        <div id="blackTile"></div> <!-- Black tile overlay -->
-        <div id="youtubePlayer"></div> <!-- YouTube player -->
-    </div>
+    <audio id="audioPlayer" preload="auto"></audio>
+    <button id="audioControlButton" class="audio-button">🔊 Play Audio</button> <!-- Audio control button -->
     <input type="text" id="guessInput" placeholder="Enter song name...">
     <button id="guessButton">Submit Guess</button>
     <div class="message" id="message"></div>
 
     <script>
         const songs = [
-            { title: "Bez koda", url: "https://youtu.be/J6utNju1uAo" }, // Replace with actual video IDs
-            { title: "Hollywood", url: "https://youtu.be/UmxNNbeyJvY" },
-            { title: "Monster", url: "https://youtu.be/vE68EvHbLwU" },
-            { title: "Forza", url: "https://youtu.be/-w55SIKYZxc" },
-            { title: "Mamma mia", url: "https://youtu.be/QcRbyU6_qB4" },
-            { title: "Mangio pasta", url: "https://youtu.be/hEEPGx-NUyQ" },
-            { title: "Tokyo", url: "https://youtu.be/1FFxiy8xVZo" },
-            { title: "Ankaran", url: "https://youtu.be/_j8UeRUm5Wc" },
-            { title: "Iluzija", url: "https://youtu.be/RV8WCdYVDo8" },
-            { title: "Dijamanti", url: "https://youtu.be/ZF0p5EI4xac" },
-            { title: "Znam da", url: "https://youtu.be/8ee66TOoi1Q" },
-            { title: "Randevu", url: "https://youtu.be/iTjfR9q5RO8" },
-            { title: "Alo Alo", url: "https://youtu.be/PbCgqGDP-3w" },
-            { title: "Idi gade", url: "https://youtu.be/NOcwiaCRbVY" },
-            { title: "Nenormalan lik", url: "https://youtu.be/1m9Wvv7PSWo" },
-            { title: "Lukas", url: "https://youtu.be/cpHe4eRMqQM" },
-            { title: "Cvit od kamena", url: "https://youtu.be/7nd7HQXsagg" },
-            { title: "Ispod sunca zlatnoga", url: "https://youtu.be/x8BH-dcSVd4" },
-            { title: "Ljeto vec je gotovo", url: "https://youtu.be/8kP1joY-cRU" }
+            { title: "Bajadeira", url: "songs/Bajadeira.mp3" }, 
+            { title: "Mangio pasta", url: "songs/MangioPasta.mp3" }, 
+            { title: "Dalmatino", url: "songs/Dalmatino.mp3" }, 
+            { title: "Forza", url: "songs/Forza.mp3" }, 
+            { title: "7 Ujutro", url: "songs/7Ujutro.mp3" }, 
+            { title: "Ankaran", url: "songs/Ankaran.mp3" },
+            { title: "Cura s kvarta", url: "songs/CuraSKvarta.mp3" }, 
+            { title: "Fantazija", url: "songs/Fantazija.mp3" }, 
+            { title: "SIP", url: "songs/Sip.mp3" }, 
 
+            // Add other songs here
         ];
 
         let currentSong;
-        let player;
-
-        // Load the YouTube IFrame Player API asynchronously
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // Create YouTube player
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer', {
-                height: '360',
-                width: '640',
-                videoId: 'M7lc1UVf-VE', // Default video ID
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            playRandomSong();
-        }
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioControlButton = document.getElementById('audioControlButton');
 
         function playRandomSong() {
             currentSong = songs[Math.floor(Math.random() * songs.length)];
-            const videoId = currentSong.url.split('/').pop();
-            player.loadVideoById(videoId, 0, "default");
+            audioPlayer.src = currentSong.url;
+            audioPlayer.play();
+
+            // Play for 10 seconds, then pause
             setTimeout(() => {
-                player.pauseVideo();
+                audioPlayer.pause();
                 document.getElementById("message").innerText = "What's the song?";
-            }, 10000); // Play for 10 seconds
+                audioControlButton.innerText = "🔊 Play Audio"; // Reset button text to "Play"
+            }, 1500000);
         }
+
+        audioControlButton.addEventListener("click", () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                audioControlButton.innerText = "⏸️ Pause Audio"; // Change button text to "Pause"
+            } else {
+                audioPlayer.pause();
+                audioControlButton.innerText = "🔊 Play Audio"; // Change button text to "Play"
+            }
+        });
 
         document.getElementById("guessButton").addEventListener("click", () => {
             const userGuess = document.getElementById("guessInput").value;
             const messageElement = document.getElementById("message");
+
             if (userGuess.toLowerCase() === currentSong.title.toLowerCase()) {
                 messageElement.innerText = "Correct! 🎉";
             } else {
                 messageElement.innerText = `Wrong! The song was "${currentSong.title}".`;
             }
+
             document.getElementById("guessInput").value = '';
-            playRandomSong();
+            playRandomSong(); // Start a new song after guess
         });
 
-        // Start the game
+        // Start the game with the first song
         playRandomSong();
     </script>
 
