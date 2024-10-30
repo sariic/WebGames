@@ -21,12 +21,12 @@
             margin-top: 10px;
             cursor: pointer;
         }
-        .message {
+        .message, .score {
             margin-top: 20px;
             font-weight: bold;
         }
         .audio-button {
-            background-color: #4CAF50; /* Green background */
+            background-color: #4CAF50;
             border: none;
             color: white;
             padding: 10px 15px;
@@ -40,29 +40,54 @@
 
     <h1>Guess the Song!</h1>
     <audio id="audioPlayer" preload="auto"></audio>
-    <button id="audioControlButton" class="audio-button">🔊 Play Audio</button> <!-- Audio control button -->
+    <button id="audioControlButton" class="audio-button">🔊 Play Audio</button>
     <input type="text" id="guessInput" placeholder="Enter song name...">
     <button id="guessButton">Submit Guess</button>
     <div class="message" id="message"></div>
+    <div class="score" id="score">Score: 0</div> <!-- Score display -->
 
     <script>
         const songs = [
-            { title: "Bajadeira", url: "songs/Bajadeira.mp3" }, 
-            { title: "Mangio pasta", url: "songs/MangioPasta.mp3" }, 
-            { title: "Dalmatino", url: "songs/Dalmatino.mp3" }, 
-            { title: "Forza", url: "songs/Forza.mp3" }, 
-            { title: "7 Ujutro", url: "songs/7Ujutro.mp3" }, 
+            { title: "Bajadeira", url: "songs/Bajadeira.mp3" },
+            { title: "Mangio pasta", url: "songs/MangioPasta.mp3" },
+            { title: "Dalmatino", url: "songs/Dalmatino.mp3" },
+            { title: "Forza", url: "songs/Forza.mp3" },
+            { title: "7 Ujutro", url: "songs/7Ujutro.mp3" },
             { title: "Ankaran", url: "songs/Ankaran.mp3" },
-            { title: "Cura s kvarta", url: "songs/CuraSKvarta.mp3" }, 
-            { title: "Fantazija", url: "songs/Fantazija.mp3" }, 
-            { title: "SIP", url: "songs/Sip.mp3" }, 
+            { title: "Cura s kvarta", url: "songs/CuraSKvarta.mp3" },
+            { title: "Fantazija", url: "songs/Fantazija.mp3" },
+            { title: "SIP", url: "songs/Sip.mp3" },
+            { title: "Alo Alo", url: "songs/AloAlo.mp3" },
+            { title: "Beograd jos zivi", url: "songs/BeogradJosZivi.mp3" },
+            { title: "Bez koda", url: "songs/BezKoda.mp3" },
+            { title: "Biseri iz blata", url: "songs/BiseriIzBlata.mp3" },
+            { title: "Colombiana", url: "songs/Colombiana.mp3" },
+            { title: "Crni Mercedes", url: "songs/CrniMercedes.mp3" },
+            { title: "Delija", url: "songs/Delija.mp3" },
+            { title: "Elena", url: "songs/Elena.mp3" },
+            { title: "Fobije", url: "songs/Fobije.mp3" },
+            { title: "Harakiri", url: "songs/Harakiri.mp3" },
+            { title: "Idi gade", url: "songs/IdiGade.mp3" },
+            { title: "Limun", url: "songs/Limun.mp3" },
+            { title: "London", url: "songs/London.mp3" },
+            { title: "Ljeto vec je gotovo", url: "songs/LjetoVecJeGotovo.mp3" },
+            { title: "Moja braca", url: "songs/MojaBraca.mp3" },
+            { title: "Munja", url: "songs/Munja.mp3" },
+            { title: "Napapiri", url: "songs/Napapiri.mp3" },
+            { title: "Psh Psh", url: "songs/PshPsh.mp3" },
+            { title: "Rizik", url: "songs/Rizik.mp3" },
+            { title: "Sve si znala", url: "songs/SveSiZnala.mp3" },
+            { title: "Tajna veza", url: "songs/TajnaVeza.mp3" },
+            { title: "Zero", url: "songs/Zero.mp3" },
+            { title: "Zivot skup", url: "songs/ZivotSkup.mp3" },
 
-            // Add other songs here
         ];
 
         let currentSong;
+        let score = 0; // Initialize score
         const audioPlayer = document.getElementById('audioPlayer');
         const audioControlButton = document.getElementById('audioControlButton');
+        const scoreElement = document.getElementById('score');
 
         function playRandomSong() {
             currentSong = songs[Math.floor(Math.random() * songs.length)];
@@ -73,17 +98,17 @@
             setTimeout(() => {
                 audioPlayer.pause();
                 document.getElementById("message").innerText = "What's the song?";
-                audioControlButton.innerText = "🔊 Play Audio"; // Reset button text to "Play"
-            }, 1500000);
+                audioControlButton.innerText = "🔊 Play Audio"; 
+            }, 150000);
         }
 
         audioControlButton.addEventListener("click", () => {
             if (audioPlayer.paused) {
                 audioPlayer.play();
-                audioControlButton.innerText = "⏸️ Pause Audio"; // Change button text to "Pause"
+                audioControlButton.innerText = "⏸️ Pause Audio";
             } else {
                 audioPlayer.pause();
-                audioControlButton.innerText = "🔊 Play Audio"; // Change button text to "Play"
+                audioControlButton.innerText = "🔊 Play Audio";
             }
         });
 
@@ -93,10 +118,13 @@
 
             if (userGuess.toLowerCase() === currentSong.title.toLowerCase()) {
                 messageElement.innerText = "Correct! 🎉";
+                score++; // Increment score
             } else {
                 messageElement.innerText = `Wrong! The song was "${currentSong.title}".`;
+                score = 0;
             }
 
+            scoreElement.innerText = `Score: ${score}`; // Update score display
             document.getElementById("guessInput").value = '';
             playRandomSong(); // Start a new song after guess
         });
