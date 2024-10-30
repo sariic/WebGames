@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Guesser</title>
+    <style>
+        /* General styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        #game-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Input field */
+        #countryInput {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 15px;
+            outline: none;
+            text-align: center;
+        }
+
+        #countryInput:focus {
+            border: 2px solid #6a11cb;
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #6a11cb;
+            color: #fff;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2575fc;
+        }
+
+        /* Result message */
+        #result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Country Guesser</h1>
+        <p>Guess the secret country! Enter a country name and see how far it is from the target.</p>
+        <input type="text" id="countryInput" placeholder="Enter country name">
+        <button onclick="guessCountry()">Guess</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let countries = [];
+        let secretCountry = null;
+
+        // Fetch country data
+        async function loadCountries() {
+            const response = await fetch("countries.json");
+            countries = await response.json();
+            secretCountry = countries[Math.floor(Math.random() * countries.length)];
+        }
+
+        // Haversine formula to calculate distance between two lat/lon points
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the Earth in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        // Determine direction (N, S, E, W) based on latitude and longitude comparison
+        function getDirection(lat1, lon1, lat2, lon2) {
+            let direction = "";
+
+            if (lat2 > lat1) direction += "North";
+            else if (lat2 < lat1) direction += "South";
+
+            if (lon2 > lon1) direction += (direction ? " East" : "East");
+            else if (lon2 < lon1) direction += (direction ? " West" : "West");
+
+            return direction || "Same location";
+        }
+
+        function guessCountry() {
+            const guess = document.getElementById("countryInput").value.trim().toLowerCase();
+            const guessedCountry = countries.find(country => country.name.toLowerCase() === guess);
+
+            if (guessedCountry) {
+                if (guessedCountry.name === secretCountry.name) {
+                    document.getElementById("result").innerText = `Correct! The secret country is ${secretCountry.name}.`;
+                } else {
+                    const distance = getDistance(
+                        guessedCountry.latitude, guessedCountry.longitude,
+                        secretCountry.latitude, secretCountry.longitude
+                    );
+                    const direction = getDirection(
+                        guessedCountry.latitude, guessedCountry.longitude,
+                        secretCountry.latitude, secretCountry.longitude
+                    );
+                    document.getElementById("result").innerText = `Secret country is ${distance.toFixed(2)} km ${direction} of the your guess.`;
+                }
+            } else {
+                document.getElementById("result").innerText = "Unknown country. Please try again.";
+            }
+        }
+
+        // Load the countries data when the page loads
+        window.onload = loadCountries;
+    </script>
+</body>
+</html>
