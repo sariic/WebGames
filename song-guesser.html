@@ -5,34 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song Guesser Game</title>
     <style>
+        /* General Styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            background-color: #f9f9f9;
-            margin: 50px;
+            background: linear-gradient(135deg, #f312a1, #8e44ad);
+            color: #fff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
-        input {
-            padding: 10px;
-            width: 200px;
-            margin-top: 10px;
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
-        button {
-            padding: 10px 15px;
-            margin-top: 10px;
-            cursor: pointer;
+
+        h2 {
+            font-size: 1.5em;
+            margin: 0.5em 0;
         }
-        .message, .score {
-            margin-top: 20px;
-            font-weight: bold;
+
+        p {
+            font-size: 1em;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto 1em;
         }
-        .audio-button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            margin-top: 20px;
+
+        /* Input and Button Styling */
+        input, button {
+            font-size: 1em;
+            padding: 0.75em 1.25em;
             border-radius: 5px;
+            border: none;
+            outline: none;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .audio-button {
+            background-color: #2ecc71;
+            border: none;
+            font-size: 1em;
+            color: #fff;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .audio-button:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        /* Message and Score Styling */
+        .message {
+            margin-top: 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .score {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.25em;
+            }
+
+            .message, .score {
+                font-size: 1.15em;
+            }
         }
     </style>
 </head>
@@ -40,22 +120,22 @@
 
     <h1>Guess the Song!</h1>
     <br>
-    <h2>Pravila:</h2>
-    <p>1. Pogodite pjesmu na temelju isječka od 10 sekundi.</p>
-    <p>2. Odgovori nisu osjetljivi na velika i mala slova (npr. Ljeto = ljeto).</p>
-    <p>3. Odgovori ne sadrže dijakritičke znakove (npr. umjesto "Kiša" treba unijeti "Kisa").</p>
-    <p>4. Za svaki točan odgovor dobije se 1 bod, a prilikom promašaja bodovi se resetiraju.</p>
+    <h2>Rules:</h2>
+    <p>1. Guess the song based on a 10-second clip.</p>
+    <p>2. Answers are not case-sensitive (e.g., "Ljeto" = "ljeto").</p>
+    <p>3. Answers do not contain accents (e.g., use "Kisa" instead of "Kiša").</p>
+    <p>4. Each correct answer earns 1 point; incorrect answers reset the score.</p>
     <br>
     <audio id="audioPlayer" preload="auto"></audio>
     <button id="audioControlButton" class="audio-button">🔊 Play Audio</button>
     <input type="text" id="guessInput" placeholder="Enter song name...">
     <button id="guessButton">Submit Guess</button>
     <div class="message" id="message"></div>
-    <div class="score" id="score">Score: 0</div> <!-- Score display -->
+    <div class="score" id="score">Score: 0</div>
 
     <script>
         const songs = [
-            { title: "Bajadeira", url: "songs/Bajadeira.mp3" },
+            { title: "Bajadera", url: "songs/Bajadera.mp3" },
             { title: "Mangio pasta", url: "songs/MangioPasta.mp3" },
             { title: "Dalmatino", url: "songs/Dalmatino.mp3" },
             { title: "Forza", url: "songs/Forza.mp3" },
@@ -87,11 +167,10 @@
             { title: "Tajna veza", url: "songs/TajnaVeza.mp3" },
             { title: "Zero", url: "songs/Zero.mp3" },
             { title: "Zivot skup", url: "songs/ZivotSkup.mp3" },
-
         ];
 
         let currentSong;
-        let score = 0; // Initialize score
+        let score = 0;
         const audioPlayer = document.getElementById('audioPlayer');
         const audioControlButton = document.getElementById('audioControlButton');
         const scoreElement = document.getElementById('score');
@@ -100,13 +179,11 @@
             currentSong = songs[Math.floor(Math.random() * songs.length)];
             audioPlayer.src = currentSong.url;
             audioPlayer.play();
-
-            // Play for 10 seconds, then pause
             setTimeout(() => {
                 audioPlayer.pause();
                 document.getElementById("message").innerText = "What's the song?";
-                audioControlButton.innerText = "🔊 Play Audio"; 
-            }, 150000);
+                audioControlButton.innerText = "🔊 Play Audio";
+            }, 10000);
         }
 
         audioControlButton.addEventListener("click", () => {
@@ -125,18 +202,26 @@
 
             if (userGuess.toLowerCase() === currentSong.title.toLowerCase()) {
                 messageElement.innerText = "Correct! 🎉";
-                score++; // Increment score
+                score++;
             } else {
                 messageElement.innerText = `Wrong! The song was "${currentSong.title}".`;
                 score = 0;
             }
 
-            scoreElement.innerText = `Score: ${score}`; // Update score display
+            scoreElement.innerText = `Score: ${score}`;
             document.getElementById("guessInput").value = '';
-            playRandomSong(); // Start a new song after guess
+            playRandomSong();
         });
 
-        // Start the game with the first song
+            // Trigger "click" on Enter key press
+        document.getElementById("guessInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent default form submission (if inside a form)
+                document.getElementById("guessButton").click(); // Trigger the button click
+            }
+        });
+
+
         playRandomSong();
     </script>
 
