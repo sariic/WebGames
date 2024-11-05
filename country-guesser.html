@@ -100,7 +100,7 @@
 
         // Fetch country data
         async function loadCountries() {
-            const response = await fetch("/country-guesser/countries.json");
+            const response = await fetch("countries.json");
             countries = await response.json();
             secretCountry = countries[Math.floor(Math.random() * countries.length)];
         }
