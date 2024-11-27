@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Country!</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Word Display */
+    #word-display {
+      font-size: 2em;
+      margin: 20px 0;
+      font-weight: bold;
+      letter-spacing: 8px;
+    }
+
+    /* Keyboard */
+    #keyboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+      max-width: 800px;
+    }
+
+    .key {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background: #f0f0f0;
+      color: #333;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.3s;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .key:hover {
+      background: #ffc107;
+      transform: translateY(-3px);
+    }
+
+    .key.disabled {
+      background-color: #aaa;
+      color: #fff;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Input Section */
+    #guess-input-container {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #guess-input {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: 2px solid #ffc107;
+      border-radius: 8px;
+      background: #fff;
+      color: #333;
+      width: 300px;
+    }
+
+    #guess-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #guess-button:hover {
+      background-color: #218838;
+      transform: translateY(-3px);
+    }
+
+    /* Mistakes */
+    #mistakes {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #ff4d4d;
+    }
+
+    /* Scoreboard */
+    #scoreboard {
+      font-size: 1.5em;
+      margin: 20px 0;
+    }
+
+    /* Buttons */
+    #restart, #new-country {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #restart:hover, #new-country:hover {
+      background-color: #0056b3;
+      transform: translateY(-3px);
+    }
+
+    #new-country {
+      background-color: #ffc107;
+      color: #333;
+    }
+
+    #new-country:hover {
+      background-color: #e0a800;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess the Country!</h1>
+  <div id="word-display"></div>
+  <div id="keyboard"></div>
+  <div id="guess-input-container">
+    <input type="text" id="guess-input" placeholder="Guess the country" />
+    <button id="guess-button">Submit Guess</button>
+  </div>
+  <div id="mistakes"></div>
+  <div id="scoreboard">Score: 0</div>
+  <button id="restart">Restart Game</button>
+  <button id="new-country" style="display: none;">New Country</button>
+
+  <script>
+    let countries = [];
+    let selectedCountry = null;
+    let mistakes = 0;
+    const maxMistakes = 6;
+    let revealedWord = "";
+    let score = 0;
+    let guessedByLetters = true;
+
+    const wordDisplay = document.getElementById("word-display");
+    const keyboard = document.getElementById("keyboard");
+    const mistakesDisplay = document.getElementById("mistakes");
+    const scoreDisplay = document.getElementById("scoreboard");
+    const restartButton = document.getElementById("restart");
+    const guessInput = document.getElementById("guess-input");
+    const guessButton = document.getElementById("guess-button");
+    const newCountryButton = document.getElementById("new-country");
+
+    async function loadCountries() {
+      try {
+        const response = await fetch('countries.json');
+        if (!response.ok) throw new Error(`Failed to load countries.json: ${response.statusText}`);
+        countries = await response.json();
+        startGame();
+      } catch (error) {
+        console.error(error);
+        wordDisplay.textContent = "Failed to load countries. Please try again.";
+      }
+    }
+
+    function startGame() {
+      if (countries.length === 0) {
+        wordDisplay.textContent = "No countries available to play.";
+        return;
+      }
+
+      mistakes = 0;
+      guessedByLetters = true;
+      updateScore();
+      mistakesDisplay.textContent = "";
+      keyboard.innerHTML = "";
+      guessInput.value = "";
+      guessInput.disabled = false;
+      guessButton.disabled = false;
+      newCountryButton.style.display = "none";
+
+      selectedCountry = countries[Math.floor(Math.random() * countries.length)].name.toUpperCase();
+      revealedWord = "_".repeat(selectedCountry.length);
+      updateWordDisplay();
+
+      for (let i = 65; i <= 90; i++) {
+        const letter = String.fromCharCode(i);
+        const key = document.createElement("div");
+        key.classList.add("key");
+        key.textContent = letter;
+        key.addEventListener("click", () => handleKeyClick(letter));
+        keyboard.appendChild(key);
+      }
+    }
+
+    function updateWordDisplay() {
+        // Split the revealed word and selected country by spaces for better formatting
+        const spacedDisplay = revealedWord
+            .split("")
+            .map((char, idx) => (selectedCountry[idx] === " " ? " " : char))
+            .join("");
+
+        // Add extra spacing between words
+        const formattedDisplay = spacedDisplay.split(" ").join("   "); // 3 spaces between words
+        wordDisplay.textContent = formattedDisplay;
+    }
+
+
+    function updateScore() {
+      scoreDisplay.textContent = `Score: ${score}`;
+    }
+
+    function handleKeyClick(letter) {
+      const keys = document.querySelectorAll(".key");
+      const key = Array.from(keys).find(k => k.textContent === letter);
+      key.classList.add("disabled");
+      key.removeEventListener("click", () => handleKeyClick(letter));
+
+      if (selectedCountry.includes(letter)) {
+        revealedWord = revealedWord
+          .split("")
+          .map((char, idx) =>
+            selectedCountry[idx] === letter ? letter : char
+          )
+          .join("");
+
+        updateWordDisplay();
+
+        if (revealedWord === selectedCountry) {
+          if (guessedByLetters) score += 1;
+          updateScore();
+          mistakesDisplay.textContent = "You guessed it! 🎉";
+          disableKeyboard();
+          newCountryButton.style.display = "inline-block";
+        }
+      } else {
+        mistakes++;
+        mistakesDisplay.textContent = `Mistakes: ${mistakes}/${maxMistakes}`;
+
+        if (mistakes >= maxMistakes) {
+          mistakesDisplay.textContent = `Game Over! The country was ${selectedCountry}.`;
+          disableKeyboard();
+          resetScore();
+        }
+      }
+    }
+
+    function handleTextGuess() {
+      const guess = guessInput.value.trim().toUpperCase();
+      if (guess === selectedCountry) {
+        if (revealedWord.includes("_")) score += 2;
+        updateScore();
+        revealedWord = selectedCountry;
+        updateWordDisplay();
+        mistakesDisplay.textContent = "You guessed it! 🎉";
+        disableKeyboard();
+        newCountryButton.style.display = "inline-block";
+      } else {
+        mistakes++;
+        mistakesDisplay.textContent = `Mistakes: ${mistakes}/${maxMistakes}`;
+        if (mistakes >= maxMistakes) {
+          mistakesDisplay.textContent = `Game Over! The country was ${selectedCountry}.`;
+          disableKeyboard();
+          resetScore();
+        }
+      }
+      guessInput.value = "";
+      guessedByLetters = false;
+    }
+
+    function disableKeyboard() {
+      const keys = document.querySelectorAll(".key");
+      keys.forEach(key => {
+        key.classList.add("disabled");
+        key.removeEventListener("click", () => handleKeyClick(key.textContent));
+      });
+      guessInput.disabled = true;
+      guessButton.disabled = true;
+    }
+
+    function resetScore() {
+      score = 0;
+      updateScore();
+    }
+
+    guessButton.addEventListener("click", handleTextGuess);
+    restartButton.addEventListener("click", startGame);
+    newCountryButton.addEventListener("click", startGame);
+
+    loadCountries();
+  </script>
+</body>
+</html>

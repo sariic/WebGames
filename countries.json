@@ -237,13 +237,13 @@
     "key": "CC",
     "latitude": -12.164165,
     "longitude": 96.870956,
-    "name": "Cocos [Keeling] Islands"
+    "name": "Cocos Islands"
   },
   {
     "key": "CD",
     "latitude": -4.038333,
     "longitude": 21.758664,
-    "name": "Congo [DRC]"
+    "name": "DRC Congo"
   },
   {
     "key": "CF",
@@ -255,7 +255,7 @@
     "key": "CG",
     "latitude": -0.228021,
     "longitude": 15.827659,
-    "name": "Congo [Republic]"
+    "name": "Republic Congo"
   },
   {
     "key": "CH",
@@ -321,7 +321,7 @@
     "key": "CW",
     "latitude": 12.1695700,
     "longitude": -68.9900200,
-    "name": "Curaçao"
+    "name": "Curacao"
   },
   {
     "key": "CX",
@@ -435,7 +435,7 @@
     "key": "FK",
     "latitude": -51.796253,
     "longitude": -59.523613,
-    "name": "Falkland Islands [Islas Malvinas]"
+    "name": "Falkland Islands"
   },
   {
     "key": "FM",
@@ -885,7 +885,7 @@
     "key": "MM",
     "latitude": 21.913965,
     "longitude": 95.956223,
-    "name": "Myanmar [Burma]"
+    "name": "Myanmar"
   },
   {
     "key": "MN",
@@ -1395,7 +1395,7 @@
     "key": "UM",
     "latitude": 0,
     "longitude": 0,
-    "name": "U.S. Minor Outlying Islands"
+    "name": "US Minor Outlying Islands"
   },
   {
     "key": "US",
@@ -1443,7 +1443,7 @@
     "key": "VI",
     "latitude": 18.335765,
     "longitude": -64.896335,
-    "name": "U.S. Virgin Islands"
+    "name": "US Virgin Islands"
   },
   {
     "key": "VN",
