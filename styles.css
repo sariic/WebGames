@@ -123,6 +123,93 @@ nav ul li a:hover {
     color: #555;
 }
 
+/* New Sections */
+
+/* About Us */
+.about-section {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 1.2em;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* Contact */
+.contact-section {
+    padding: 40px 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.contact-section p {
+    font-size: 1.2em;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.contact-section ul {
+    list-style: none; /* Removes the dots */
+    padding: 0;       /* Removes any left padding */
+    margin: 0;        /* Ensures proper alignment */
+}
+
+.contact-section ul li {
+    margin-bottom: 10px; /* Adds spacing between items */
+    font-size: 1.2em;    /* Ensures consistent text size */
+}
+
+.contact-section a {
+    color: #f39c12;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-section a:hover {
+    text-decoration: underline;
+}
+
+
+/* Privacy Policy */
+.privacy-section {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.privacy-section h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.privacy-section p {
+    font-size: 1.2em;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
 /* Footer */
 footer {
     padding: 20px;
