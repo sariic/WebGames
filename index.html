@@ -8,21 +8,24 @@
 </head>
 <body>
     <header>
-        <div class="logo">🎮 Saric Games</div>
+        <div class="logo">Saric Games</div>
         <nav>
             <ul>
-                <li><a href="#games">Games</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#games" data-key="gamesNavbar">Games</a></li>
+                <li><a href="#about" data-key="aboutNavbar">About Us</a></li>
+                <li><a href="#contact" data-key="contactNavbar">Contact</a></li>
+                <li><a href="#privacy" data-key="privacyNavbar">Privacy Policy</a></li>
                 <li class="language-switcher">
-                    <button id="en-btn">EN</button>
-                    <button id="hr-btn">HR</button>
+                    <button data-key="languages">Languages</button>
+                    <ul>
+                        <li><button id="en-btn"><img src="https://vectorflags.s3.amazonaws.com/flags/uk-square-01.png" style="height: 25px;width: 25px;"></button></li>
+                        <li><button id="hr-btn"><img src="https://vectorflags.s3.amazonaws.com/flags/hr-square-01.png" style="height: 25px;width: 25px;"></button></li>
+                        <li><button id="es-btn"><img src="https://vectorflags.s3.amazonaws.com/flags/es-square-01.png" style="height: 25px;width: 25px;"></button></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
-    </header>
-    
+    </header>    
 
     <section class="hero">
         <h1 data-key="welcome">Welcome to Saric Games</h1>
@@ -31,73 +34,73 @@
     </section>
 
     <section id="games" class="games-section">
-        <h2>Our Games</h2>
+        <h2 data-key="ourGames">Our Games</h2>
         <div class="games-grid">
             <div class="game-card">
-                <h3><a href="tic-tac-toe.html">Tic-Tac-Toe</a></h3>
+                <h3><a href="tic-tac-toe.html" data-key="ticTacToe">Tic-Tac-Toe</a></h3>
                 <img src="https://i.ibb.co/dbwDDqw/TTT-sp-logo.png" style="height: 250px;width: 250px;">
-                <p>Križić-Kružić</p>
+                <p data-key="ticTacToeDesc">Tic-Tac-Toe is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row first is the winner.</p>
             </div>
             <div class="game-card">
-                <h3><a href="https://ticktacktoe-7aa6d.web.app/">Tic-Tac-Toe v2 (Multiplayer)</a></h3>
+                <h3><a href="https://ticktacktoe-7aa6d.web.app/" data-key="ticTacToeV2">Tic-Tac-Toe v2 (Multiplayer)</a></h3>
                 <img src="https://i.ibb.co/5YX7Nc5/TTT-mp-logo.png" style="height: 250px;width: 250px;">
-                <p>Križić-Kružić online</p>
+                <p data-key="ticTacToeV2Desc">Tic-Tac-Toe v2 (Multiplayer). Play with friends or with random players from around the world.</p>
             </div>
             <div class="game-card">
-                <h3><a href="https://pizz.uno/">Uno Multiplayer</a></h3>
+                <h3><a href="https://pizz.uno/" data-key="unoMultiplayer">Uno Multiplayer</a></h3>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/UNO_Logo.svg" style="height: 250px;width: 250px;">
-                <p>Uno online</p>
+                <p data-key="unoMultiplayerDesc">Play Uno vs AI/friend/random player</p>
             </div>
         </div>
         <div class="games-grid">
             <div class="game-card">
-                <h3><a href="https://briskula.si/">Briškula</a></h3>
+                <h3><a href="https://briskula.si/" data-key="briscola">Briscola</a></h3>
                 <img src="https://supermarketitaly.com/cdn/shop/products/modiano-9925-triestine-playing-cards-home-kitchen-modiano-202296_800x.jpg?v=1626279496" style="height: 250px;width: 250px;">
-                <p>Briškula, trešeta itd.</p>
+                <p data-key="briscolaDesc">Play Briscola, Tressette and similar card games</p>
             </div>
             <div class="game-card">
-                <h3><a href="https://graddrzava.net/">Država, Selo, Grad</a></h3>
+                <h3><a href="https://graddrzava.net/" data-key="countryVillageCity">Country, Village, City</a></h3>
                 <img src="https://i.ibb.co/2WPR1bs/DSG-logo.png" style="height: 250px;width: 250px;">
-                <p>Država-selo-grad uz samostalnu provjeru odgovora</p>
+                <p data-key="countryVillageCityDesc">Play game Country-Village-City with own answer check</p>
             </div>
             <div class="game-card">
-                <h3><a href="https://boardgames.io/en/connect4">Connect 4</a></h3>
+                <h3><a href="https://boardgames.io/en/connect4" data-key="connect4">Connect 4</a></h3>
                 <img src="https://static.thenounproject.com/png/1579985-200.png" style="height: 250px;width: 250px;">
-                <p>Poveži četiri u nizu</p>
+                <p data-key="connect4Desc">Poveži četiri u nizu</p>
             </div>
         </div>
         <div class="games-grid">
             <div class="game-card">
-                <h3><a href="https://richup.io/">Monopoly</a></h3>
+                <h3><a href="https://richup.io/" data-key="monopoly">Monopoly</a></h3>
                 <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/47264ce6-f9be-440a-8fe5-de7b40f003e7/df3hxpu-6f404e91-67cb-4d84-b975-844bdc3c4478.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ3MjY0Y2U2LWY5YmUtNDQwYS04ZmU1LWRlN2I0MGYwMDNlN1wvZGYzaHhwdS02ZjQwNGU5MS02N2NiLTRkODQtYjk3NS04NDRiZGMzYzQ0NzgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.zBDfjwFtASRDsC9UTxS43fpWpfN54oZA_02FSytYd0g" style="height: 250px;width: 250px;">
-                <p>Monopoly online</p>
+                <p data-key="monopolyDesc">Monopoly</p>
             </div>
             <div class="game-card">
-                <h3><a href="https://minigolfclub.io/">MiniGolf</a></h3>
+                <h3><a href="https://minigolfclub.io/" data-key="miniGolf">MiniGolf</a></h3>
                 <img src="https://cdn-icons-png.flaticon.com/512/8614/8614946.png" style="height: 250px;width: 250px;">
-                <p>MiniGolf online</p>
+                <p data-key="miniGolfDesc">MiniGolf</p>
             </div>
             <div class="game-card">
-                <h3><a href="song-guesser.html">Song Guesser</a></h3>
+                <h3><a href="song-guesser.html" data-key="songGuesser">Song Guesser</a></h3>
                 <img src="https://m.media-amazon.com/images/I/61B9wpidCfL.png" style="height: 250px;width: 250px;">
-                <p>WORKING NOW!!!</p>
+                <p data-key="songGuesserDesc">Guess the song by 10-second audio</p>
             </div>
         </div>
         <div class="games-grid">
             <div class="game-card">
-                <h3><a href="https://hangmanonline.io/">Vješala</a></h3>
+                <h3><a href="https://hangmanonline.io/" data-key="hangman">Hangman</a></h3>
                 <img src="https://cdn-icons-png.flaticon.com/256/3401/3401289.png" style="height: 250px;width: 250px;">
-                <p>Vješala s engleskom tipkovnicom, uz mogućnost hrvatskih riječi</p>
+                <p data-key="hangmanDesc">Hangman with an English keyboard, with the possibility of Croatian words</p>
             </div>
             <div class="game-card">
-                <h3><a href="country-guesser.html">Country Guesser</a></h3>
+                <h3><a href="country-guesser.html" data-key="countryGuesser">Country Guesser</a></h3>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxAuZkKdbdjWzv-xtL-5aPMSJDCLl6PDHwwQ&s" style="height: 250px;width: 250px;">
-                <p>Guees the secret country!</p>
+                <p data-key="countryGuesserDesc">Guees the secret country</p>
             </div>
             <div class="game-card">
-                <h3><a href="country-guesser2.html">Country Guesser 2</a></h3>
+                <h3><a href="country-guesser2.html" data-key="countryGuesser2">Country Guesser 2</a></h3>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxAuZkKdbdjWzv-xtL-5aPMSJDCLl6PDHwwQ&s" style="height: 250px;width: 250px;">
-                <p>Guees the secret country!</p>
+                <p data-key="countryGuesser2Desc">Guees the secret country!</p>
             </div>
         </div>
         <div class="games-grid">
@@ -133,8 +136,8 @@
         </p>
         <ul>
             <li>Email: <a href="mailto:zapes274@gmail.com">zapes274@gmail.com</a></li>
-            <li>Phone: Currently unavailable</li>
-            <li>Address: Croatia</li>
+            <li data-key="phone">Phone: Currently unavailable</li>
+            <li data-key="address">Address: Croatia</li>
         </ul>
     </section>
 
@@ -147,7 +150,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2024 Saric Games. All rights reserved.</p>
+        <p>&copy; 2025 Saric Games. All rights reserved.</p>
     </footer>
 
     <script src="language-switcher.js"></script>

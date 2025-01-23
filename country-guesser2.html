@@ -155,7 +155,7 @@
     <button id="guess-button">Submit Guess</button>
   </div>
   <div id="mistakes"></div>
-  <div id="scoreboard">Score: 0</div>
+  <div id="scoreboard">Score: 0 | High Score: 0</div>
   <button id="restart">Restart Game</button>
   <button id="new-country" style="display: none;">New Country</button>
 
@@ -166,6 +166,7 @@
     const maxMistakes = 6;
     let revealedWord = "";
     let score = 0;
+    let highScore = 0;
     let guessedByLetters = true;
 
     const wordDisplay = document.getElementById("word-display");
@@ -182,6 +183,7 @@
         const response = await fetch('countries.json');
         if (!response.ok) throw new Error(`Failed to load countries.json: ${response.statusText}`);
         countries = await response.json();
+        loadHighScore();
         startGame();
       } catch (error) {
         console.error(error);
@@ -220,20 +222,31 @@
     }
 
     function updateWordDisplay() {
-        // Split the revealed word and selected country by spaces for better formatting
-        const spacedDisplay = revealedWord
-            .split("")
-            .map((char, idx) => (selectedCountry[idx] === " " ? " " : char))
-            .join("");
+      const spacedDisplay = revealedWord
+        .split("")
+        .map((char, idx) => (selectedCountry[idx] === " " ? " " : char))
+        .join("");
 
-        // Add extra spacing between words
-        const formattedDisplay = spacedDisplay.split(" ").join("   "); // 3 spaces between words
-        wordDisplay.textContent = formattedDisplay;
+      const formattedDisplay = spacedDisplay.split(" ").join("   ");
+      wordDisplay.textContent = formattedDisplay;
     }
 
+    function loadHighScore() {
+      const storedHighScore = localStorage.getItem("highScore");
+      highScore = storedHighScore ? parseInt(storedHighScore, 10) : 0;
+      updateScore();
+    }
 
     function updateScore() {
-      scoreDisplay.textContent = `Score: ${score}`;
+      scoreDisplay.textContent = `Score: ${score} | High Score: ${highScore}`;
+    }
+
+    function checkHighScore() {
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        updateScore();
+      }
     }
 
     function handleKeyClick(letter) {
@@ -253,7 +266,8 @@
         updateWordDisplay();
 
         if (revealedWord === selectedCountry) {
-          if (guessedByLetters) score += 1;
+          if (guessedByLetters) score += 500;
+          checkHighScore();
           updateScore();
           mistakesDisplay.textContent = "You guessed it! 🎉";
           disableKeyboard();
@@ -261,6 +275,8 @@
         }
       } else {
         mistakes++;
+        if (score > 0) score -= 50; // Deduct points for mistakes
+        updateScore(); // Reflect updated score
         mistakesDisplay.textContent = `Mistakes: ${mistakes}/${maxMistakes}`;
 
         if (mistakes >= maxMistakes) {
@@ -274,7 +290,8 @@
     function handleTextGuess() {
       const guess = guessInput.value.trim().toUpperCase();
       if (guess === selectedCountry) {
-        if (revealedWord.includes("_")) score += 2;
+        if (revealedWord.includes("_")) score += 1000;
+        checkHighScore();
         updateScore();
         revealedWord = selectedCountry;
         updateWordDisplay();
@@ -283,6 +300,8 @@
         newCountryButton.style.display = "inline-block";
       } else {
         mistakes++;
+        if (score > 0) score -= 50; // Deduct points for mistakes
+        updateScore(); // Reflect updated score
         mistakesDisplay.textContent = `Mistakes: ${mistakes}/${maxMistakes}`;
         if (mistakes >= maxMistakes) {
           mistakesDisplay.textContent = `Game Over! The country was ${selectedCountry}.`;
