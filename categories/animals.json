@@ -1,8 +1,30 @@
 {
   "name": "Animals",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Dog", "clue": "Pet" },
+    { "word": "Cat", "clue": "Whiskers" },
+    { "word": "Lion", "clue": "Savannah" },
+    { "word": "Tiger", "clue": "Stripes" },
+    { "word": "Elephant", "clue": "Trunk" },
+    { "word": "Giraffe", "clue": "Tall" },
+    { "word": "Zebra", "clue": "Pattern" },
+    { "word": "Bear", "clue": "Forest" },
+    { "word": "Wolf", "clue": "Pack" },
+    { "word": "Fox", "clue": "Clever" },
+    { "word": "Rabbit", "clue": "Hop" },
+    { "word": "Horse", "clue": "Ride" },
+    { "word": "Cow", "clue": "Farm" },
+    { "word": "Pig", "clue": "Mud" },
+    { "word": "Sheep", "clue": "Wool" },
+    { "word": "Goat", "clue": "Climb" },
+    { "word": "Chicken", "clue": "Eggs" },
+    { "word": "Duck", "clue": "Pond" },
+    { "word": "Eagle", "clue": "Sky" },
+    { "word": "Owl", "clue": "Night" },
+    { "word": "Shark", "clue": "Ocean" },
+    { "word": "Dolphin", "clue": "Intelligent" },
+    { "word": "Octopus", "clue": "Tentacles" },
+    { "word": "Frog", "clue": "Jump" },
+    { "word": "Snake", "clue": "Slither" }
   ]
 }

@@ -1,8 +1,30 @@
 {
   "name": "Objects",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Chair", "clue": "Room" },
+    { "word": "Table", "clue": "Surface" },
+    { "word": "Lamp", "clue": "Light" },
+    { "word": "Phone", "clue": "Call" },
+    { "word": "Laptop", "clue": "Portable" },
+    { "word": "Bottle", "clue": "Liquid" },
+    { "word": "Backpack", "clue": "Travel" },
+    { "word": "Clock", "clue": "Time" },
+    { "word": "Mirror", "clue": "Reflection" },
+    { "word": "Key", "clue": "Lock" },
+    { "word": "Umbrella", "clue": "Weather" },
+    { "word": "Camera", "clue": "Image" },
+    { "word": "Book", "clue": "Pages" },
+    { "word": "Pen", "clue": "Write" },
+    { "word": "Shoes", "clue": "Walk" },
+    { "word": "Glasses", "clue": "Vision" },
+    { "word": "Television", "clue": "Screen" },
+    { "word": "Fridge", "clue": "Cold" },
+    { "word": "Oven", "clue": "Heat" },
+    { "word": "Toothbrush", "clue": "Routine" },
+    { "word": "Wallet", "clue": "Carry" },
+    { "word": "Headphones", "clue": "Sound" },
+    { "word": "Suitcase", "clue": "Trip" },
+    { "word": "Candle", "clue": "Flame" },
+    { "word": "Scissors", "clue": "Cut" }
   ]
 }

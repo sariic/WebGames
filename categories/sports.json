@@ -1,8 +1,30 @@
 {
-  "name": "Animals",
+  "name": "Sports",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Football", "clue": "Stadium" },
+    { "word": "Basketball", "clue": "Court" },
+    { "word": "Golf", "clue": "Swing" },
+    { "word": "Tennis", "clue": "Rally" },
+    { "word": "Baseball", "clue": "Diamond" },
+    { "word": "Volleyball", "clue": "Beach" },
+    { "word": "Boxing", "clue": "Gloves" },
+    { "word": "Swimming", "clue": "Lane" },
+    { "word": "Cycling", "clue": "Helmet" },
+    { "word": "Rugby", "clue": "Scrum" },
+    { "word": "Hockey", "clue": "Ice" },
+    { "word": "Cricket", "clue": "Pitch" },
+    { "word": "Badminton", "clue": "Feather" },
+    { "word": "Wrestling", "clue": "Mat" },
+    { "word": "Skateboarding", "clue": "Ramp" },
+    { "word": "Surfing", "clue": "Wave" },
+    { "word": "Archery", "clue": "Target" },
+    { "word": "Skiing", "clue": "Slope" },
+    { "word": "Snowboarding", "clue": "Mountain" },
+    { "word": "Fencing", "clue": "Mask" },
+    { "word": "Rowing", "clue": "River" },
+    { "word": "Karate", "clue": "Belt" },
+    { "word": "Table Tennis", "clue": "Spin" },
+    { "word": "Marathon", "clue": "Endurance" },
+    { "word": "Diving", "clue": "Splash" }
   ]
 }

@@ -1,8 +1,30 @@
 {
   "name": "Characters",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Superman", "clue": "Flight" },
+    { "word": "Batman", "clue": "Night" },
+    { "word": "Spider-Man", "clue": "Swing" },
+    { "word": "Harry Potter", "clue": "Magic" },
+    { "word": "Sherlock Holmes", "clue": "Detective" },
+    { "word": "Darth Vader", "clue": "Dark" },
+    { "word": "Luke Skywalker", "clue": "Force" },
+    { "word": "Homer Simpson", "clue": "Family" },
+    { "word": "Mickey Mouse", "clue": "Cartoon" },
+    { "word": "SpongeBob SquarePants", "clue": "Ocean" },
+    { "word": "Elsa", "clue": "Ice" },
+    { "word": "Shrek", "clue": "Swamp" },
+    { "word": "Iron Man", "clue": "Suit" },
+    { "word": "Thor", "clue": "Hammer" },
+    { "word": "Hulk", "clue": "Strength" },
+    { "word": "Wonder Woman", "clue": "Lasso" },
+    { "word": "Joker", "clue": "Chaos" },
+    { "word": "Deadpool", "clue": "Humor" },
+    { "word": "Mario", "clue": "Platform" },
+    { "word": "Luigi", "clue": "Green" },
+    { "word": "Pikachu", "clue": "Electric" },
+    { "word": "Goku", "clue": "Energy" },
+    { "word": "Naruto", "clue": "Ninja" },
+    { "word": "Lara Croft", "clue": "Adventure" },
+    { "word": "Kratos", "clue": "Myth" }
   ]
 }

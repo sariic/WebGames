@@ -1,8 +1,30 @@
 {
-  "name": "Body and health",
+  "name": "Body and Health",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Heart", "clue": "Beat" },
+    { "word": "Brain", "clue": "Think" },
+    { "word": "Lungs", "clue": "Air" },
+    { "word": "Stomach", "clue": "Digest" },
+    { "word": "Muscle", "clue": "Strength" },
+    { "word": "Bone", "clue": "Support" },
+    { "word": "Skin", "clue": "Surface" },
+    { "word": "Blood", "clue": "Flow" },
+    { "word": "Eye", "clue": "Vision" },
+    { "word": "Ear", "clue": "Sound" },
+    { "word": "Nose", "clue": "Smell" },
+    { "word": "Mouth", "clue": "Speak" },
+    { "word": "Hand", "clue": "Grip" },
+    { "word": "Leg", "clue": "Move" },
+    { "word": "Back", "clue": "Posture" },
+    { "word": "Sleep", "clue": "Rest" },
+    { "word": "Diet", "clue": "Food" },
+    { "word": "Exercise", "clue": "Fitness" },
+    { "word": "Medicine", "clue": "Treatment" },
+    { "word": "Vitamins", "clue": "Supplement" },
+    { "word": "Hydration", "clue": "Water" },
+    { "word": "Injury", "clue": "Pain" },
+    { "word": "Recovery", "clue": "Heal" },
+    { "word": "Temperature", "clue": "Measure" },
+    { "word": "Pulse", "clue": "Rate" }
   ]
 }

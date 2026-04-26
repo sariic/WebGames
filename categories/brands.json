@@ -1,8 +1,30 @@
 {
   "name": "Brands",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Nike", "clue": "Sport" },
+    { "word": "Adidas", "clue": "Shoes" },
+    { "word": "Apple", "clue": "Technology" },
+    { "word": "Samsung", "clue": "Electronics" },
+    { "word": "Coca-Cola", "clue": "Drink" },
+    { "word": "Pepsi", "clue": "Fizz" },
+    { "word": "McDonald's", "clue": "Fast" },
+    { "word": "KFC", "clue": "Chicken" },
+    { "word": "Amazon", "clue": "Online" },
+    { "word": "Google", "clue": "Search" },
+    { "word": "Microsoft", "clue": "Software" },
+    { "word": "Tesla", "clue": "Electric" },
+    { "word": "BMW", "clue": "Drive" },
+    { "word": "Mercedes-Benz", "clue": "Luxury" },
+    { "word": "IKEA", "clue": "Furniture" },
+    { "word": "H&M", "clue": "Clothing" },
+    { "word": "Zara", "clue": "Fashion" },
+    { "word": "Netflix", "clue": "Streaming" },
+    { "word": "YouTube", "clue": "Video" },
+    { "word": "Spotify", "clue": "Music" },
+    { "word": "PlayStation", "clue": "Gaming" },
+    { "word": "Xbox", "clue": "Console" },
+    { "word": "Nintendo", "clue": "Games" },
+    { "word": "Starbucks", "clue": "Coffee" },
+    { "word": "LEGO", "clue": "Blocks" }
   ]
 }

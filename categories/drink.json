@@ -1,8 +1,30 @@
 {
   "name": "Drink",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Water", "clue": "Clear" },
+    { "word": "Coffee", "clue": "Bitter" },
+    { "word": "Tea", "clue": "Leaves" },
+    { "word": "Juice", "clue": "Fruit" },
+    { "word": "Milk", "clue": "White" },
+    { "word": "Soda", "clue": "Bubbles" },
+    { "word": "Lemonade", "clue": "Sour" },
+    { "word": "Smoothie", "clue": "Blend" },
+    { "word": "Hot Chocolate", "clue": "Warm" },
+    { "word": "Energy Drink", "clue": "Boost" },
+    { "word": "Iced Tea", "clue": "Cold" },
+    { "word": "Espresso", "clue": "Shot" },
+    { "word": "Cappuccino", "clue": "Foam" },
+    { "word": "Latte", "clue": "Milk" },
+    { "word": "Milkshake", "clue": "Thick" },
+    { "word": "Cocktail", "clue": "Mix" },
+    { "word": "Beer", "clue": "Brew" },
+    { "word": "Wine", "clue": "Grapes" },
+    { "word": "Whiskey", "clue": "Barrel" },
+    { "word": "Vodka", "clue": "Clear" },
+    { "word": "Champagne", "clue": "Celebrate" },
+    { "word": "Mojito", "clue": "Mint" },
+    { "word": "Cola", "clue": "Fizz" },
+    { "word": "Herbal Tea", "clue": "Natural" },
+    { "word": "Sparkling Water", "clue": "Gas" }
   ]
 }

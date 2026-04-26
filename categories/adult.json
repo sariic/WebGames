@@ -1,8 +1,30 @@
 {
-  "name": "Adult",
+  "name": "Adult - 18+",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Date", "clue": "Evening" },
+    { "word": "Kiss", "clue": "Affection" },
+    { "word": "Flirting", "clue": "Playful" },
+    { "word": "Romance", "clue": "Love" },
+    { "word": "Attraction", "clue": "Chemistry" },
+    { "word": "Couple", "clue": "Two" },
+    { "word": "Relationship", "clue": "Bond" },
+    { "word": "Breakup", "clue": "End" },
+    { "word": "Crush", "clue": "Secret" },
+    { "word": "Passion", "clue": "Strong" },
+    { "word": "Seduction", "clue": "Charm" },
+    { "word": "Jealousy", "clue": "Emotion" },
+    { "word": "Trust", "clue": "Important" },
+    { "word": "Intimacy", "clue": "Close" },
+    { "word": "Love Letter", "clue": "Words" },
+    { "word": "Anniversary", "clue": "Celebrate" },
+    { "word": "Proposal", "clue": "Question" },
+    { "word": "Marriage", "clue": "Commitment" },
+    { "word": "Divorce", "clue": "Separation" },
+    { "word": "Heartbreak", "clue": "Pain" },
+    { "word": "Charm", "clue": "Appeal" },
+    { "word": "Desire", "clue": "Want" },
+    { "word": "Fantasy", "clue": "Imagination" },
+    { "word": "Connection", "clue": "Feelings" },
+    { "word": "Temptation", "clue": "Pull" }
   ]
 }

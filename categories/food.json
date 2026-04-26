@@ -1,8 +1,30 @@
 {
   "name": "Food",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Pizza", "clue": "Slice" },
+    { "word": "Burger", "clue": "Stack" },
+    { "word": "Pasta", "clue": "Boil" },
+    { "word": "Sushi", "clue": "Roll" },
+    { "word": "Salad", "clue": "Fresh" },
+    { "word": "Soup", "clue": "Warm" },
+    { "word": "Steak", "clue": "Grill" },
+    { "word": "Bread", "clue": "Bake" },
+    { "word": "Cheese", "clue": "Dairy" },
+    { "word": "Egg", "clue": "Breakfast" },
+    { "word": "Rice", "clue": "Grain" },
+    { "word": "Chicken", "clue": "Protein" },
+    { "word": "Fish", "clue": "Ocean" },
+    { "word": "Chocolate", "clue": "Sweet" },
+    { "word": "Ice Cream", "clue": "Cold" },
+    { "word": "Apple", "clue": "Fruit" },
+    { "word": "Banana", "clue": "Yellow" },
+    { "word": "Carrot", "clue": "Orange" },
+    { "word": "Potato", "clue": "Root" },
+    { "word": "Sandwich", "clue": "Layers" },
+    { "word": "Pancake", "clue": "Flat" },
+    { "word": "Noodles", "clue": "Long" },
+    { "word": "Popcorn", "clue": "Snack" },
+    { "word": "Cake", "clue": "Celebrate" },
+    { "word": "Honey", "clue": "Sticky" }
   ]
 }

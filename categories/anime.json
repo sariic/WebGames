@@ -1,8 +1,30 @@
 {
   "name": "Anime",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Naruto", "clue": "Village" },
+    { "word": "Goku", "clue": "Battle" },
+    { "word": "Luffy", "clue": "Pirate" },
+    { "word": "Saitama", "clue": "Punch" },
+    { "word": "Ichigo", "clue": "Soul" },
+    { "word": "Light Yagami", "clue": "Notebook" },
+    { "word": "Levi Ackerman", "clue": "Captain" },
+    { "word": "Eren Yeager", "clue": "Titan" },
+    { "word": "Mikasa Ackerman", "clue": "Protect" },
+    { "word": "Edward Elric", "clue": "Alchemy" },
+    { "word": "Killua", "clue": "Electric" },
+    { "word": "Gon", "clue": "Hunter" },
+    { "word": "Tanjiro", "clue": "Demon" },
+    { "word": "Nezuko", "clue": "Blood" },
+    { "word": "Gojo", "clue": "Eyes" },
+    { "word": "Sukuna", "clue": "Curse" },
+    { "word": "Kakashi", "clue": "Mask" },
+    { "word": "Itachi", "clue": "Crow" },
+    { "word": "Hinata", "clue": "Shy" },
+    { "word": "Asuna", "clue": "Sword" },
+    { "word": "Kirito", "clue": "Game" },
+    { "word": "Rem", "clue": "Maid" },
+    { "word": "Emilia", "clue": "Spirit" },
+    { "word": "Asta", "clue": "Magic" },
+    { "word": "Yuno", "clue": "Wind" }
   ]
 }

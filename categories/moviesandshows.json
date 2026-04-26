@@ -1,8 +1,30 @@
 {
   "name": "Movies and shows",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Cinema", "clue": "Screen" },
+    { "word": "Actor", "clue": "Role" },
+    { "word": "Director", "clue": "Vision" },
+    { "word": "Script", "clue": "Dialogue" },
+    { "word": "Scene", "clue": "Moment" },
+    { "word": "Trailer", "clue": "Preview" },
+    { "word": "Series", "clue": "Episodes" },
+    { "word": "Episode", "clue": "Part" },
+    { "word": "Camera", "clue": "Shot" },
+    { "word": "Animation", "clue": "Drawn" },
+    { "word": "Documentary", "clue": "Real" },
+    { "word": "Comedy", "clue": "Laugh" },
+    { "word": "Drama", "clue": "Emotion" },
+    { "word": "Horror", "clue": "Fear" },
+    { "word": "Action", "clue": "Fast" },
+    { "word": "Fantasy", "clue": "Magic" },
+    { "word": "Sci-Fi", "clue": "Future" },
+    { "word": "Subtitle", "clue": "Text" },
+    { "word": "Soundtrack", "clue": "Music" },
+    { "word": "Streaming", "clue": "Online" },
+    { "word": "Premiere", "clue": "Release" },
+    { "word": "Cliffhanger", "clue": "Suspense" },
+    { "word": "Plot", "clue": "Story" },
+    { "word": "Character", "clue": "Personality" },
+    { "word": "Set", "clue": "Location" }
   ]
 }

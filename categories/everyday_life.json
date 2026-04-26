@@ -1,8 +1,30 @@
 {
   "name": "Everyday life",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Morning", "clue": "Start" },
+    { "word": "Alarm", "clue": "Wake" },
+    { "word": "Shower", "clue": "Routine" },
+    { "word": "Breakfast", "clue": "Early" },
+    { "word": "Coffee", "clue": "Energy" },
+    { "word": "Commute", "clue": "Travel" },
+    { "word": "Work", "clue": "Task" },
+    { "word": "School", "clue": "Learn" },
+    { "word": "Lunch", "clue": "Midday" },
+    { "word": "Shopping", "clue": "Buy" },
+    { "word": "Exercise", "clue": "Health" },
+    { "word": "Dinner", "clue": "Evening" },
+    { "word": "Family", "clue": "Home" },
+    { "word": "Friends", "clue": "Social" },
+    { "word": "Conversation", "clue": "Talk" },
+    { "word": "Phone Call", "clue": "Voice" },
+    { "word": "Message", "clue": "Text" },
+    { "word": "Cleaning", "clue": "Chores" },
+    { "word": "Laundry", "clue": "Clothes" },
+    { "word": "Cooking", "clue": "Prepare" },
+    { "word": "Relaxing", "clue": "Rest" },
+    { "word": "Watching TV", "clue": "Screen" },
+    { "word": "Reading", "clue": "Pages" },
+    { "word": "Sleeping", "clue": "Night" },
+    { "word": "Weekend", "clue": "Free" }
   ]
 }

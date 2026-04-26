@@ -1,8 +1,30 @@
 {
-  "name": "Fameous persons",
+  "name": "Famous persons",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Albert Einstein", "clue": "Physics" },
+    { "word": "Leonardo da Vinci", "clue": "Renaissance" },
+    { "word": "Elon Musk", "clue": "Innovation" },
+    { "word": "Taylor Swift", "clue": "Pop" },
+    { "word": "Cristiano Ronaldo", "clue": "Goal" },
+    { "word": "Lionel Messi", "clue": "Dribble" },
+    { "word": "Beyoncé", "clue": "Stage" },
+    { "word": "Steve Jobs", "clue": "Apple" },
+    { "word": "Bill Gates", "clue": "Software" },
+    { "word": "Michael Jackson", "clue": "Dance" },
+    { "word": "Oprah Winfrey", "clue": "Talk" },
+    { "word": "Barack Obama", "clue": "President" },
+    { "word": "Marilyn Monroe", "clue": "Hollywood" },
+    { "word": "Dwayne Johnson", "clue": "Wrestling" },
+    { "word": "Ariana Grande", "clue": "Vocals" },
+    { "word": "Keanu Reeves", "clue": "Action" },
+    { "word": "Tom Cruise", "clue": "Stunts" },
+    { "word": "Emma Watson", "clue": "Wizard" },
+    { "word": "Brad Pitt", "clue": "Film" },
+    { "word": "Angelina Jolie", "clue": "Humanitarian" },
+    { "word": "Serena Williams", "clue": "Tennis" },
+    { "word": "Usain Bolt", "clue": "Speed" },
+    { "word": "Mark Zuckerberg", "clue": "Social" },
+    { "word": "Jeff Bezos", "clue": "Commerce" },
+    { "word": "Gordon Ramsay", "clue": "Kitchen" }
   ]
 }

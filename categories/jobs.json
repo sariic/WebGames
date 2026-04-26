@@ -1,8 +1,30 @@
 {
   "name": "Jobs",
   "words": [
-    { "word": "Dog", "clue": "Barks" },
-    { "word": "Elephant", "clue": "Big ears" },
-    { "word": "Cat", "clue": "Meows" }
+    { "word": "Doctor", "clue": "Hospital" },
+    { "word": "Teacher", "clue": "Classroom" },
+    { "word": "Engineer", "clue": "Design" },
+    { "word": "Chef", "clue": "Kitchen" },
+    { "word": "Police Officer", "clue": "Patrol" },
+    { "word": "Firefighter", "clue": "Emergency" },
+    { "word": "Pilot", "clue": "Sky" },
+    { "word": "Nurse", "clue": "Care" },
+    { "word": "Lawyer", "clue": "Court" },
+    { "word": "Farmer", "clue": "Field" },
+    { "word": "Artist", "clue": "Creative" },
+    { "word": "Musician", "clue": "Perform" },
+    { "word": "Journalist", "clue": "News" },
+    { "word": "Programmer", "clue": "Code" },
+    { "word": "Mechanic", "clue": "Repair" },
+    { "word": "Electrician", "clue": "Wires" },
+    { "word": "Plumber", "clue": "Pipes" },
+    { "word": "Architect", "clue": "Blueprint" },
+    { "word": "Photographer", "clue": "Capture" },
+    { "word": "Dentist", "clue": "Teeth" },
+    { "word": "Waiter", "clue": "Service" },
+    { "word": "Driver", "clue": "Transport" },
+    { "word": "Scientist", "clue": "Research" },
+    { "word": "Actor", "clue": "Stage" },
+    { "word": "Barber", "clue": "Hair" }
   ]
 }
