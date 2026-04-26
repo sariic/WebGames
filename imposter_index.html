@@ -19,7 +19,7 @@ body {
   padding: 20px;
 }
 
-button, select, input {
+button, input {
   padding: 10px;
   margin: 8px;
   border-radius: 10px;
@@ -27,6 +27,10 @@ button, select, input {
 }
 
 .hidden { display: none; }
+
+#categoryList div {
+  margin: 5px 0;
+}
 </style>
 </head>
 
@@ -42,8 +46,10 @@ button, select, input {
   <h3>Imposters</h3>
   <input id="imposterCount" type="number" value="1" min="1">
 
-  <h3>Category</h3>
-  <select id="categorySelect"></select>
+  <h3>Categories</h3>
+  <button onclick="toggleAll(true)">Select All</button>
+  <button onclick="toggleAll(false)">Clear</button>
+  <div id="categoryList">Loading...</div>
 
   <h3>
     <label>
@@ -74,20 +80,62 @@ let categories = [];
 const categoryFiles = [
   "categories/animals.json",
   "categories/food.json",
-  "categories/objects.json"
+  "categories/objects.json",
+  "categories/adult.json",
+  "categories/anime.json",
+  "categories/bodyandhealth.json",
+  "categories/brands.json",
+  "categories/characters.json",
+  "categories/drink.json",
+  "categories/everyday_life.json",
+  "categories/fameous_persons.json",
+  "categories/jobs.json",
+  "categories/moviesandshows.json",
+  "categories/music.json",
+  "categories/sports.json"
 ];
 
 // LOAD CATEGORIES
 async function loadCategories() {
+  let container = document.getElementById("categoryList");
+  container.innerHTML = "Loading...";
+
+  categories = [];
+
   for (let file of categoryFiles) {
-    let res = await fetch(file);
-    let data = await res.json();
-    categories.push(data);
+    try {
+      let res = await fetch(file);
+      if (!res.ok) throw new Error();
+
+      let data = await res.json();
+      if (!data.name || !data.words) continue;
+
+      categories.push(data);
+
+    } catch (err) {
+      console.error("Failed loading:", file);
+    }
   }
 
-  let select = document.getElementById("categorySelect");
+  // Render checkboxes
+  container.innerHTML = "";
+
+  if (categories.length === 0) {
+    container.innerHTML = "No categories found";
+    return;
+  }
+
   categories.forEach((cat, i) => {
-    select.innerHTML += `<option value="${i}">${cat.name}</option>`;
+    let div = document.createElement("div");
+
+    div.innerHTML = `
+      <label>
+        <input type="checkbox" value="${i}">
+        ${cat.name}
+      </label>
+    `;
+
+    container.appendChild(div);
   });
 }
 
@@ -104,6 +152,11 @@ function addPlayer(name="") {
   let div = document.createElement("div");
   div.innerHTML = `<input value="${name}" placeholder="Name">`;
   document.getElementById("players").appendChild(div);
+}
+
+function toggleAll(state) {
+  document.querySelectorAll("#categoryList input")
+    .forEach(cb => cb.checked = state);
 }
 
 function startGame() {
@@ -125,14 +178,28 @@ function startGame() {
     if (!imposters.includes(r)) imposters.push(r);
   }
 
-  // PICK WORD FROM CATEGORY
-  let catIndex = document.getElementById("categorySelect").value;
-  let cat = categories[catIndex];
-  wordObj = cat.words[Math.floor(Math.random() * cat.words.length)];
+  // GET SELECTED CATEGORIES
+  let checked = document.querySelectorAll("#categoryList input:checked");
+
+  if (checked.length === 0) {
+    alert("Select at least one category!");
+    return;
+  }
+
+  // MERGE WORDS
+  let allWords = [];
+
+  checked.forEach(cb => {
+    let cat = categories[cb.value];
+    allWords = allWords.concat(cat.words);
+  });
+
+  wordObj = allWords[Math.floor(Math.random() * allWords.length)];
 
   document.getElementById("setup").classList.add("hidden");
   document.getElementById("revealScreen").classList.remove("hidden");
 
+  current = 0;
   showPlayer();
 }
 
@@ -165,7 +232,9 @@ function next() {
   if (current >= players.length) {
     alert("Start clue phase!");
     location.reload();
-  } else showPlayer();
+  } else {
+    showPlayer();
+  }
 }
 </script>
 

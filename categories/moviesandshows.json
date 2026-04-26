@@ -1,0 +1,8 @@
+{
+  "name": "Movies and shows",
+  "words": [
+    { "word": "Dog", "clue": "Barks" },
+    { "word": "Elephant", "clue": "Big ears" },
+    { "word": "Cat", "clue": "Meows" }
+  ]
+}
