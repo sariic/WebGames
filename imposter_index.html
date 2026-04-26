@@ -3,157 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Imposter Word Game</title>
+<title>Imposter Game</title>
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
+  font-family: Arial;
   background: #111;
   color: white;
-  margin: 0;
+  text-align: center;
 }
 
 .container {
-  padding: 20px;
   max-width: 500px;
   margin: auto;
+  padding: 20px;
 }
 
-button {
-  padding: 12px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #00c896;
-  color: white;
-  font-size: 16px;
-}
-
-input {
+button, select, input {
   padding: 10px;
-  border-radius: 8px;
+  margin: 8px;
+  border-radius: 10px;
   border: none;
-  margin: 5px;
-  width: 80%;
 }
 
 .hidden { display: none; }
-
-.card {
-  background: #222;
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 20px;
-}
-
-.reveal {
-  font-size: 22px;
-  margin-top: 15px;
-}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <h1>🕵️ Imposter Game</h1>
 
 <div id="setup">
-  <h3>Players</h3>
   <div id="players"></div>
-  <button onclick="addPlayer()">+ Add Player</button><br>
+  <button onclick="addPlayer()">+ Player</button>
 
-  <h3>Number of Imposters</h3>
-  <input id="imposterCount" type="number" min="1" value="1">
+  <h3>Imposters</h3>
+  <input id="imposterCount" type="number" value="1" min="1">
 
-  <br><button onclick="startGame()">Start Game</button>
+  <h3>Category</h3>
+  <select id="categorySelect"></select>
+
+  <h3>
+    <label>
+      <input type="checkbox" id="imposterClue">
+      Give imposters a clue
+    </label>
+  </h3>
+
+  <button onclick="startGame()">Start</button>
 </div>
 
 <div id="revealScreen" class="hidden">
   <h3 id="playerTurn"></h3>
-  <button onclick="revealRole()">Tap to Reveal</button>
-  <div class="reveal" id="roleText"></div>
-  <button onclick="nextPlayer()" id="nextBtn" class="hidden">Next Player</button>
-</div>
-
-<div id="gameScreen" class="hidden">
-  <h2>Give Clues!</h2>
-  <button onclick="showVoting()">Go to Voting</button>
-</div>
-
-<div id="votingScreen" class="hidden">
-  <h2>Vote the Imposter</h2>
-  <div id="voteList"></div>
-  <button onclick="revealResult()">Reveal Result</button>
-</div>
-
-<div id="resultScreen" class="hidden">
-  <h2 id="resultText"></h2>
-  <button onclick="location.reload()">Play Again</button>
+  <button onclick="reveal()">Reveal</button>
+  <p id="roleText"></p>
+  <button onclick="next()" id="nextBtn" class="hidden">Next</button>
 </div>
 
 </div>
 
 <script>
-let playerNames = [];
-let currentPlayer = 0;
+let players = [];
 let imposters = [];
-let secretWord;
+let current = 0;
+let wordObj;
+let categories = [];
 
-const words = [
-  "Apple","Car","Beach","Pizza","Dog",
-  "School","Phone","Football","Chair","Music"
+const categoryFiles = [
+  "categories/animals.json",
+  "categories/food.json",
+  "categories/objects.json"
 ];
 
-// LOAD SAVED PLAYERS
-window.onload = () => {
-  const saved = JSON.parse(localStorage.getItem("players"));
-  if (saved && saved.length) {
-    saved.forEach(name => addPlayer(name));
-  } else {
-    addPlayer(); addPlayer(); addPlayer();
+// LOAD CATEGORIES
+async function loadCategories() {
+  for (let file of categoryFiles) {
+    let res = await fetch(file);
+    let data = await res.json();
+    categories.push(data);
   }
+
+  let select = document.getElementById("categorySelect");
+  categories.forEach((cat, i) => {
+    select.innerHTML += `<option value="${i}">${cat.name}</option>`;
+  });
+}
+
+loadCategories();
+
+// PLAYERS (saved)
+window.onload = () => {
+  let saved = JSON.parse(localStorage.getItem("players"));
+  if (saved) saved.forEach(n => addPlayer(n));
+  else { addPlayer(); addPlayer(); addPlayer(); }
 };
 
 function addPlayer(name="") {
-  const div = document.createElement("div");
-  div.innerHTML = `<input value="${name}" placeholder="Player name">`;
+  let div = document.createElement("div");
+  div.innerHTML = `<input value="${name}" placeholder="Name">`;
   document.getElementById("players").appendChild(div);
 }
 
 function startGame() {
-  const inputs = document.querySelectorAll("#players input");
-  playerNames = [];
-
-  inputs.forEach(i => {
-    if (i.value.trim()) playerNames.push(i.value.trim());
+  players = [];
+  document.querySelectorAll("#players input").forEach(i => {
+    if (i.value.trim()) players.push(i.value.trim());
   });
 
-  if (playerNames.length < 3) {
-    alert("Need at least 3 players!");
-    return;
-  }
+  if (players.length < 3) return alert("Need 3+ players");
 
-  // SAVE PLAYERS
-  localStorage.setItem("players", JSON.stringify(playerNames));
+  localStorage.setItem("players", JSON.stringify(players));
 
-  // IMPOSTER COUNT
-  let imposterCount = parseInt(document.getElementById("imposterCount").value);
-  if (imposterCount >= playerNames.length) {
-    alert("Too many imposters!");
-    return;
-  }
+  let impCount = +document.getElementById("imposterCount").value;
+  if (impCount >= players.length) return alert("Too many imposters");
 
-  // PICK IMPOSTERS
   imposters = [];
-  while (imposters.length < imposterCount) {
-    let rand = Math.floor(Math.random() * playerNames.length);
-    if (!imposters.includes(rand)) imposters.push(rand);
+  while (imposters.length < impCount) {
+    let r = Math.floor(Math.random() * players.length);
+    if (!imposters.includes(r)) imposters.push(r);
   }
 
-  secretWord = words[Math.floor(Math.random() * words.length)];
+  // PICK WORD FROM CATEGORY
+  let catIndex = document.getElementById("categorySelect").value;
+  let cat = categories[catIndex];
+  wordObj = cat.words[Math.floor(Math.random() * cat.words.length)];
 
   document.getElementById("setup").classList.add("hidden");
   document.getElementById("revealScreen").classList.remove("hidden");
@@ -163,51 +138,34 @@ function startGame() {
 
 function showPlayer() {
   document.getElementById("playerTurn").innerText =
-    playerNames[currentPlayer] + "'s turn";
+    players[current] + "'s turn";
   document.getElementById("roleText").innerText = "";
   document.getElementById("nextBtn").classList.add("hidden");
 }
 
-function revealRole() {
-  if (imposters.includes(currentPlayer)) {
-    document.getElementById("roleText").innerText = "😈 You are an IMPOSTER!";
+function reveal() {
+  let giveClue = document.getElementById("imposterClue").checked;
+
+  if (imposters.includes(current)) {
+    let text = "😈 IMPOSTER";
+    if (giveClue && wordObj.clue) {
+      text += "\nClue: " + wordObj.clue;
+    }
+    document.getElementById("roleText").innerText = text;
   } else {
-    document.getElementById("roleText").innerText = "🟢 Word: " + secretWord;
+    document.getElementById("roleText").innerText =
+      "🟢 Word: " + wordObj.word;
   }
+
   document.getElementById("nextBtn").classList.remove("hidden");
 }
 
-function nextPlayer() {
-  currentPlayer++;
-  if (currentPlayer >= playerNames.length) {
-    document.getElementById("revealScreen").classList.add("hidden");
-    document.getElementById("gameScreen").classList.remove("hidden");
-  } else {
-    showPlayer();
-  }
-}
-
-function showVoting() {
-  document.getElementById("gameScreen").classList.add("hidden");
-  document.getElementById("votingScreen").classList.remove("hidden");
-
-  let voteHTML = "";
-  playerNames.forEach(name => {
-    voteHTML += `<p>${name}</p>`;
-  });
-
-  document.getElementById("voteList").innerHTML = voteHTML;
-}
-
-function revealResult() {
-  document.getElementById("votingScreen").classList.add("hidden");
-  document.getElementById("resultScreen").classList.remove("hidden");
-
-  let imposterNames = imposters.map(i => playerNames[i]).join(", ");
-
-  document.getElementById("resultText").innerText =
-    "Imposters: " + imposterNames +
-    "\nWord was: " + secretWord;
+function next() {
+  current++;
+  if (current >= players.length) {
+    alert("Start clue phase!");
+    location.reload();
+  } else showPlayer();
 }
 </script>
 
