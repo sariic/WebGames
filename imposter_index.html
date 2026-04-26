@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imposter Word Game</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #111;
+  color: white;
+  margin: 0;
+}
+
+.container {
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #00c896;
+  color: white;
+  font-size: 16px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin: 5px;
+  width: 80%;
+}
+
+.hidden { display: none; }
+
+.card {
+  background: #222;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.reveal {
+  font-size: 22px;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🕵️ Imposter Game</h1>
+
+<div id="setup">
+  <h3>Players</h3>
+  <div id="players"></div>
+  <button onclick="addPlayer()">+ Add Player</button><br>
+
+  <h3>Number of Imposters</h3>
+  <input id="imposterCount" type="number" min="1" value="1">
+
+  <br><button onclick="startGame()">Start Game</button>
+</div>
+
+<div id="revealScreen" class="hidden">
+  <h3 id="playerTurn"></h3>
+  <button onclick="revealRole()">Tap to Reveal</button>
+  <div class="reveal" id="roleText"></div>
+  <button onclick="nextPlayer()" id="nextBtn" class="hidden">Next Player</button>
+</div>
+
+<div id="gameScreen" class="hidden">
+  <h2>Give Clues!</h2>
+  <button onclick="showVoting()">Go to Voting</button>
+</div>
+
+<div id="votingScreen" class="hidden">
+  <h2>Vote the Imposter</h2>
+  <div id="voteList"></div>
+  <button onclick="revealResult()">Reveal Result</button>
+</div>
+
+<div id="resultScreen" class="hidden">
+  <h2 id="resultText"></h2>
+  <button onclick="location.reload()">Play Again</button>
+</div>
+
+</div>
+
+<script>
+let playerNames = [];
+let currentPlayer = 0;
+let imposters = [];
+let secretWord;
+
+const words = [
+  "Apple","Car","Beach","Pizza","Dog",
+  "School","Phone","Football","Chair","Music"
+];
+
+// LOAD SAVED PLAYERS
+window.onload = () => {
+  const saved = JSON.parse(localStorage.getItem("players"));
+  if (saved && saved.length) {
+    saved.forEach(name => addPlayer(name));
+  } else {
+    addPlayer(); addPlayer(); addPlayer();
+  }
+};
+
+function addPlayer(name="") {
+  const div = document.createElement("div");
+  div.innerHTML = `<input value="${name}" placeholder="Player name">`;
+  document.getElementById("players").appendChild(div);
+}
+
+function startGame() {
+  const inputs = document.querySelectorAll("#players input");
+  playerNames = [];
+
+  inputs.forEach(i => {
+    if (i.value.trim()) playerNames.push(i.value.trim());
+  });
+
+  if (playerNames.length < 3) {
+    alert("Need at least 3 players!");
+    return;
+  }
+
+  // SAVE PLAYERS
+  localStorage.setItem("players", JSON.stringify(playerNames));
+
+  // IMPOSTER COUNT
+  let imposterCount = parseInt(document.getElementById("imposterCount").value);
+  if (imposterCount >= playerNames.length) {
+    alert("Too many imposters!");
+    return;
+  }
+
+  // PICK IMPOSTERS
+  imposters = [];
+  while (imposters.length < imposterCount) {
+    let rand = Math.floor(Math.random() * playerNames.length);
+    if (!imposters.includes(rand)) imposters.push(rand);
+  }
+
+  secretWord = words[Math.floor(Math.random() * words.length)];
+
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("revealScreen").classList.remove("hidden");
+
+  showPlayer();
+}
+
+function showPlayer() {
+  document.getElementById("playerTurn").innerText =
+    playerNames[currentPlayer] + "'s turn";
+  document.getElementById("roleText").innerText = "";
+  document.getElementById("nextBtn").classList.add("hidden");
+}
+
+function revealRole() {
+  if (imposters.includes(currentPlayer)) {
+    document.getElementById("roleText").innerText = "😈 You are an IMPOSTER!";
+  } else {
+    document.getElementById("roleText").innerText = "🟢 Word: " + secretWord;
+  }
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextPlayer() {
+  currentPlayer++;
+  if (currentPlayer >= playerNames.length) {
+    document.getElementById("revealScreen").classList.add("hidden");
+    document.getElementById("gameScreen").classList.remove("hidden");
+  } else {
+    showPlayer();
+  }
+}
+
+function showVoting() {
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("votingScreen").classList.remove("hidden");
+
+  let voteHTML = "";
+  playerNames.forEach(name => {
+    voteHTML += `<p>${name}</p>`;
+  });
+
+  document.getElementById("voteList").innerHTML = voteHTML;
+}
+
+function revealResult() {
+  document.getElementById("votingScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+
+  let imposterNames = imposters.map(i => playerNames[i]).join(", ");
+
+  document.getElementById("resultText").innerText =
+    "Imposters: " + imposterNames +
+    "\nWord was: " + secretWord;
+}
+</script>
+
+</body>
+</html>
