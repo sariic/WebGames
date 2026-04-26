@@ -91,6 +91,7 @@
         <p>Guess the secret country! Enter a country name and see how far it is from the target.</p>
         <input type="text" id="countryInput" placeholder="Enter country name">
         <button onclick="guessCountry()">Guess</button>
+        <button onclick="revealAnswer()">Reveal answer</button>
         <div id="result"></div>
     </div>
 
@@ -152,6 +153,10 @@
             } else {
                 document.getElementById("result").innerText = "Unknown country. Please try again.";
             }
+        }
+
+        function revealAnswer() {
+            document.getElementById("result").innerText = `Sorry, you lost! The secret country is ${secretCountry.name}.`;
         }
 
         // Load the countries data when the page loads
