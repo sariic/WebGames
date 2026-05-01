@@ -11,6 +11,7 @@ body {
   background: #111;
   color: white;
   text-align: center;
+  margin: 0;
 }
 
 .container {
@@ -24,31 +25,61 @@ button, input {
   margin: 8px;
   border-radius: 10px;
   border: none;
+  font-size: 16px;
 }
 
-.hidden { display: none; }
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
 
 #categoryList div {
   margin: 5px 0;
+}
+
+#roleText {
+  white-space: pre-line;
+  font-size: 22px;
+  margin-top: 20px;
+}
+
+.playerVoteBtn {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.bigText {
+  font-size: 24px;
+  margin: 20px 0;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <h1>🕵️ Imposter Game</h1>
 
+<!-- SETUP -->
 <div id="setup">
+
   <div id="players"></div>
+
   <button onclick="addPlayer()">+ Player</button>
 
   <h3>Imposters</h3>
   <input id="imposterCount" type="number" value="1" min="1">
 
   <h3>Categories</h3>
+
   <button onclick="toggleAll(true)">Select All</button>
   <button onclick="toggleAll(false)">Clear</button>
+
   <div id="categoryList">Loading...</div>
 
   <h3>
@@ -58,24 +89,83 @@ button, input {
     </label>
   </h3>
 
-  <button onclick="startGame()">Start</button>
+  <button onclick="startGame()">Start Game</button>
+
 </div>
 
+<!-- REVEAL -->
 <div id="revealScreen" class="hidden">
-  <h3 id="playerTurn"></h3>
+
+  <h2 id="playerTurn"></h2>
+
   <button onclick="reveal()">Reveal</button>
+
   <p id="roleText"></p>
-  <button onclick="next()" id="nextBtn" class="hidden">Next</button>
+
+  <button onclick="next()" id="nextBtn" class="hidden">
+    Next
+  </button>
+
+</div>
+
+<!-- GAME -->
+<div id="gameScreen" class="hidden">
+
+  <h2>🎤 Clue Phase</h2>
+
+  <p class="bigText" id="startingPlayerText"></p>
+
+  <p>
+    Players now describe the word.
+  </p>
+
+  <button onclick="startVoting()">
+    Start Voting
+  </button>
+
+</div>
+
+<!-- VOTING -->
+<div id="votingScreen" class="hidden">
+
+  <h2>🗳️ Vote The Imposter</h2>
+
+  <div id="voteButtons"></div>
+
+  <p id="votedText"></p>
+
+  <button onclick="showResults()">
+    Reveal Results
+  </button>
+
+</div>
+
+<!-- RESULTS -->
+<div id="resultScreen" class="hidden">
+
+  <h2>🏁 Results</h2>
+
+  <p id="resultText" class="bigText"></p>
+
+  <button onclick="newGame()">
+    New Game
+  </button>
+
 </div>
 
 </div>
 
 <script>
+
 let players = [];
 let imposters = [];
 let current = 0;
+let startingPlayer = 0;
+
 let wordObj;
 let categories = [];
+
+let votedPlayer = null;
 
 const categoryFiles = [
   "categories/animals.json",
@@ -95,37 +185,50 @@ const categoryFiles = [
   "categories/sports.json"
 ];
 
+
 // LOAD CATEGORIES
 async function loadCategories() {
+
   let container = document.getElementById("categoryList");
+
   container.innerHTML = "Loading...";
 
   categories = [];
 
   for (let file of categoryFiles) {
+
     try {
+
       let res = await fetch(file);
+
       if (!res.ok) throw new Error();
 
       let data = await res.json();
+
       if (!data.name || !data.words) continue;
 
       categories.push(data);
 
     } catch (err) {
+
       console.error("Failed loading:", file);
+
     }
+
   }
 
-  // Render checkboxes
   container.innerHTML = "";
 
   if (categories.length === 0) {
+
     container.innerHTML = "No categories found";
+
     return;
+
   }
 
   categories.forEach((cat, i) => {
+
     let div = document.createElement("div");
 
     div.innerHTML = `
@@ -136,106 +239,300 @@ async function loadCategories() {
     `;
 
     container.appendChild(div);
+
   });
+
 }
 
 loadCategories();
 
-// PLAYERS (saved)
+
+// LOAD PLAYERS
 window.onload = () => {
+
   let saved = JSON.parse(localStorage.getItem("players"));
-  if (saved) saved.forEach(n => addPlayer(n));
-  else { addPlayer(); addPlayer(); addPlayer(); }
+
+  if (saved) {
+
+    saved.forEach(n => addPlayer(n));
+
+  } else {
+
+    addPlayer();
+    addPlayer();
+    addPlayer();
+
+  }
+
 };
 
-function addPlayer(name="") {
+
+// ADD PLAYER
+function addPlayer(name = "") {
+
   let div = document.createElement("div");
-  div.innerHTML = `<input value="${name}" placeholder="Name">`;
+
+  div.innerHTML = `
+    <input value="${name}" placeholder="Name">
+  `;
+
   document.getElementById("players").appendChild(div);
+
 }
 
+
+// SELECT ALL CATEGORIES
 function toggleAll(state) {
+
   document.querySelectorAll("#categoryList input")
     .forEach(cb => cb.checked = state);
+
 }
 
-function startGame() {
-  players = [];
-  document.querySelectorAll("#players input").forEach(i => {
-    if (i.value.trim()) players.push(i.value.trim());
-  });
 
-  if (players.length < 3) return alert("Need 3+ players");
+// START GAME
+function startGame() {
+
+  players = [];
+
+  document.querySelectorAll("#players input")
+    .forEach(i => {
+
+      if (i.value.trim()) {
+
+        players.push(i.value.trim());
+
+      }
+
+    });
+
+  if (players.length < 3) {
+
+    return alert("Need at least 3 players");
+
+  }
 
   localStorage.setItem("players", JSON.stringify(players));
 
-  let impCount = +document.getElementById("imposterCount").value;
-  if (impCount >= players.length) return alert("Too many imposters");
+  let impCount =
+    +document.getElementById("imposterCount").value;
 
-  imposters = [];
-  while (imposters.length < impCount) {
-    let r = Math.floor(Math.random() * players.length);
-    if (!imposters.includes(r)) imposters.push(r);
+  if (impCount >= players.length) {
+
+    return alert("Too many imposters");
+
   }
 
-  // GET SELECTED CATEGORIES
-  let checked = document.querySelectorAll("#categoryList input:checked");
+  imposters = [];
+
+  while (imposters.length < impCount) {
+
+    let r = Math.floor(Math.random() * players.length);
+
+    if (!imposters.includes(r)) {
+
+      imposters.push(r);
+
+    }
+
+  }
+
+  // SELECTED CATEGORIES
+  let checked =
+    document.querySelectorAll("#categoryList input:checked");
 
   if (checked.length === 0) {
+
     alert("Select at least one category!");
+
     return;
+
   }
 
   // MERGE WORDS
   let allWords = [];
 
   checked.forEach(cb => {
+
     let cat = categories[cb.value];
+
     allWords = allWords.concat(cat.words);
+
   });
 
-  wordObj = allWords[Math.floor(Math.random() * allWords.length)];
+  // RANDOM WORD
+  wordObj =
+    allWords[Math.floor(Math.random() * allWords.length)];
 
-  document.getElementById("setup").classList.add("hidden");
-  document.getElementById("revealScreen").classList.remove("hidden");
+  // SHOW REVEAL SCREEN
+  document.getElementById("setup")
+    .classList.add("hidden");
+
+  document.getElementById("revealScreen")
+    .classList.remove("hidden");
 
   current = 0;
+
   showPlayer();
+
 }
 
+
+// SHOW PLAYER TURN
 function showPlayer() {
+
   document.getElementById("playerTurn").innerText =
     players[current] + "'s turn";
+
   document.getElementById("roleText").innerText = "";
-  document.getElementById("nextBtn").classList.add("hidden");
+
+  document.getElementById("nextBtn")
+    .classList.add("hidden");
+
 }
 
+
+// REVEAL ROLE
 function reveal() {
-  let giveClue = document.getElementById("imposterClue").checked;
+
+  let giveClue =
+    document.getElementById("imposterClue").checked;
 
   if (imposters.includes(current)) {
+
     let text = "😈 IMPOSTER";
+
     if (giveClue && wordObj.clue) {
-      text += "\nClue: " + wordObj.clue;
+
+      text += "\n\nClue: " + wordObj.clue;
+
     }
+
     document.getElementById("roleText").innerText = text;
+
   } else {
+
     document.getElementById("roleText").innerText =
-      "🟢 Word: " + wordObj.word;
+      "🟢 Word:\n\n" + wordObj.word;
+
   }
 
-  document.getElementById("nextBtn").classList.remove("hidden");
+  document.getElementById("nextBtn")
+    .classList.remove("hidden");
+
 }
 
+
+// NEXT PLAYER
 function next() {
+
   current++;
+
   if (current >= players.length) {
-    alert("Start clue phase!");
-    location.reload();
+
+    startingPlayer =
+      Math.floor(Math.random() * players.length);
+
+    document.getElementById("revealScreen")
+      .classList.add("hidden");
+
+    document.getElementById("gameScreen")
+      .classList.remove("hidden");
+
+    document.getElementById("startingPlayerText")
+      .innerText =
+      players[startingPlayer] +
+      " starts the conversation!";
+
   } else {
+
     showPlayer();
+
   }
+
 }
+
+
+// START VOTING
+function startVoting() {
+
+  document.getElementById("gameScreen")
+    .classList.add("hidden");
+
+  document.getElementById("votingScreen")
+    .classList.remove("hidden");
+
+  let container =
+    document.getElementById("voteButtons");
+
+  container.innerHTML = "";
+
+  players.forEach((name, index) => {
+
+    let btn = document.createElement("button");
+
+    btn.className = "playerVoteBtn";
+
+    btn.innerText = name;
+
+    btn.onclick = () => {
+
+      votedPlayer = index;
+
+      document.getElementById("votedText")
+        .innerText =
+        "You voted for: " + name;
+
+    };
+
+    container.appendChild(btn);
+
+  });
+
+}
+
+
+// SHOW RESULTS
+function showResults() {
+
+  document.getElementById("votingScreen")
+    .classList.add("hidden");
+
+  document.getElementById("resultScreen")
+    .classList.remove("hidden");
+
+  let imposterNames =
+    imposters.map(i => players[i]).join(", ");
+
+  let votedName =
+    votedPlayer !== null
+      ? players[votedPlayer]
+      : "Nobody";
+
+  document.getElementById("resultText")
+    .innerText =
+    "🗳️ Voted Player: " + votedName +
+    "\n\n😈 Imposters: " + imposterNames +
+    "\n\n🟢 Word: " + wordObj.word;
+
+}
+
+
+// NEW GAME
+function newGame() {
+
+  current = 0;
+  votedPlayer = null;
+  imposters = [];
+
+  document.getElementById("resultScreen")
+    .classList.add("hidden");
+
+  document.getElementById("setup")
+    .classList.remove("hidden");
+
+}
+
 </script>
 
 </body>
